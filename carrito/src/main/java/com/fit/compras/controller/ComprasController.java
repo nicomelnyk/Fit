@@ -15,7 +15,6 @@ import com.fit.compras.service.CompraService;
 
 import io.swagger.v3.oas.annotations.Operation;
 
-
 @RestController
 @RequestMapping("/")
 public class ComprasController {
@@ -31,5 +30,4 @@ public class ComprasController {
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd"); 
 		return compraService.devolverCompras(dni, formato.parse(fechaDesde), formato.parse(fechaHasta), ordenFecha, ordenMonto);
 	}
-
 }

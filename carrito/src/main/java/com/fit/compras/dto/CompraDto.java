@@ -1,4 +1,4 @@
-package com.fit.carrito.dto;
+package com.fit.compras.dto;
 
 import java.util.Date;
 
@@ -6,12 +6,10 @@ import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Validated
-@Builder
 @Getter
 @Setter
 public class CompraDto {

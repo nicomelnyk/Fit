@@ -29,6 +29,12 @@ public class CarritoService {
 	
 	@Autowired
 	ProductoRepository productoRepository;
+	
+	@Autowired
+	CarritoProductoService carritoProductoService;
+	
+	@Autowired
+	CompraService compraService;
 
 	public Carrito crearCarrito(Integer dni, Boolean isSpecial) {
 		return carritoRepository.save(Carrito.builder().dni(dni).isSpecial(isSpecial).build());
@@ -36,10 +42,14 @@ public class CarritoService {
 
 	@SuppressWarnings("null")
 	public String finalizarCompra(Integer idCarrito) {
+		
 		Optional<Carrito> carrito = carritoRepository.findById(idCarrito);
 		if(carrito.isPresent()) {
 			Carrito carritoPresente = carrito.get();
 			List<CarritoProducto> carritoProductos = carritoProductoRepository.findCarritoProductoByCarritoId(idCarrito);
+			
+			// Lanzo excepción si quiero finalizar un carrito ya finalizado
+			carritoProductoService.fallarSiElCarritoYaFinalizo(carritoProductos);
 			
 			// Acá se podría agregar una query compleja, será más rápido (joineando tablas)
 			HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -60,20 +70,21 @@ public class CarritoService {
 			
 			// Primero aplico el dto. 4x3 que es común para todos
 			for (Entry<Integer, Integer> entry : map.entrySet()) {
-				if(entry.getValue() > 4) {
+				if(entry.getValue() >= 4) {
 					valorFinalSinDto -= productoRepository.getById(entry.getKey()).getValor();
 				}
 			}
 			
 			Integer dni = carritoPresente.getDni();
+			Boolean comproMasDe5000 = compraService.comproMasDe5000EnMesCalendario(dni);
 			
 			// Calculo el precio final de la compra
-			if(carritoPresente.getIsSpecial()) {
+			if(!carritoPresente.getIsSpecial()) {
 				CarritoComun comun = new CarritoComun();
-				valorFinal = comun.descuentoFinal(valorFinalSinDto, map, dni);
+				valorFinal = comun.descuentoFinal(valorFinalSinDto, map, dni, comproMasDe5000);
 			} else {
 				CarritoEspecial especial = new CarritoEspecial();
-				valorFinal = especial.descuentoFinal(valorFinalSinDto, map, dni);
+				valorFinal = especial.descuentoFinal(valorFinalSinDto, map, dni, comproMasDe5000);
 			}
 			carritoPresente.setValorFinal(valorFinal);
 			carritoRepository.save(carritoPresente);

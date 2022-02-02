@@ -35,9 +35,10 @@ public class CarritoProductoService {
 		throw new ProductoInvalidoException("Producto no existente");
 	}
 	
-	private void fallarSiElCarritoYaFinalizo(List<CarritoProducto> carritoProducto) {
-		if(carritoRepository.getById(carritoProducto.get(0).getCarritoId()).getValorFinal() == null) 
-			throw new ProductoInvalidoException("Compra finalizada");
+	public void fallarSiElCarritoYaFinalizo(List<CarritoProducto> carritoProducto) {
+		if(carritoProducto.size() != 0) 
+			if(carritoRepository.getById(carritoProducto.get(0).getCarritoId()).getValorFinal() != null) 
+				throw new ProductoInvalidoException("Compra finalizada");
 		
 	}
 

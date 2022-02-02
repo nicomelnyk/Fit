@@ -1,7 +1,5 @@
 package com.fit.carrito.model;
 
-import java.util.HashMap;
-
 import com.fit.carrito.interfaces.Carrito;
 
 public class CarritoComun implements Carrito {
@@ -12,7 +10,7 @@ public class CarritoComun implements Carrito {
 	}
 	
 	@Override
-	public Integer descuentoEspecialVip(Double totalCompra, Integer dni) {
+	public Integer descuentoEspecialVip(Double totalCompra, Integer dni, Boolean comproMasDe5000) {
 		return 0;
 	}
 
