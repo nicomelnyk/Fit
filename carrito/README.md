@@ -1,6 +1,6 @@
-# Carrito
+# Compras
 
-Api encargada de gestionar los carritos de compra
+Api encargada de gestionar las compras
 
 ## Tecnologia
 Java 11
