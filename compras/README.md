@@ -1,19 +1,20 @@
-# Compras
+# Carrito
 
-Api encargada de gestionar las compras
+Api encargada de gestionar los carritos de compras
 
 ## Tecnologia
 Java 11
 
 ## Servicios
-Acceder a la url http://localhost:8080/compras/swagger-ui/index.html?configUrl=/compras/fit/swagger.html/swagger-config#/
+- Acceder a la url http://localhost:8081/carrito/swagger-ui/index.html?configUrl=/carrito/fit/swagger.html/swagger-config#/
 para ver la documentacion de los servicios, se muestra cada url con los objetos que recibe y devuelve
+- Carrito -> url.compras=http://localhost:8080/compras
 
 ### Configuración del Ambiente
 
 ### Configuracion de la app
-server.port=8080
-server.servlet.contextPath=/compras
+server.port=8081
+server.servlet.contextPath=/carrito
 
 ## Base de Datos
 Base de datos:
